@@ -1,27 +1,120 @@
 ---
-title: "Test 1"
+title: "My Quarto"
 author: "Miranda"
-format: html
+date: today
+format:
+  html:
+    theme: quartz
+    toc: true
+    number-sections: true 
+    code-fold: show
 editor: visual
+bibliography: references.bib
 ---
 
-## Quarto
+# Header 1
 
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+## Header 2
 
-## Running Code
+### Header 3
 
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+#### Header 4
+
+**BOLD**
+
+**Italicize**
+
+***Bold and Italicize***
+
+~~Strikethrough~~
+
+[website link text](https://quarto.org/docs/output-formats/html-themes.html)
+
+# Tabset
+
+:::: panel-tabset
+## First Tab
+
+## Second Tab
+
+::: panel-tabset
+### First Child
+
+Testing 1
+
+### Second Child
+
+Testing 2
+:::
+::::
 
 ```{r}
-1 + 1
-```
+#| label: set
+#| message: false
+#| warning: false
+#| echo: fenced
 
-You can add options to executable code like this
+#loading Librarys
+library(tidyverse)
+
+my_data <- read_csv("../data/stx_fish_psu.csv")
+
+head(my_data)
+
+```
 
 ```{r}
-#| echo: false
-2 * 2
+#| label: fig-mpg
+#| fig-cap:  "Title"
+
+#loading Librarys
+library(tidyverse)
+library(ggplot2)
+
+my_data <- read_csv("../data/stx_fish_psu.csv")
+
+ggplot(my_data,
+       aes (x = YEAR, y = density))+
+  geom_point()
+
 ```
 
-The `echo: false` option disables the printing of code (only output is displayed).
+::: callout-tip
+As shown in @fig-mpg
+:::
+
+```{r}
+#| label: fig-mpg2
+#| fig-cap:  "Title"
+
+#loading Librarys
+library(tidyverse)
+library(ggplot2)
+library(knitr)
+
+my_data <- read_csv("../data/stx_fish_psu.csv")
+
+my_data |> 
+  group_by(YEAR) |>  
+  summarise(density = mean(density, na.rm = TRUE)) |> 
+  kable()
+```
+
+![](../visuals/GOPR0412_1681664409257.jpg){.lightbox fig-align="center" width="50%"}
+
+Comment out ctrl shift c
+
+#Formulas with LaTeX
+
+$$E=mc^2 $$\$\$E=mc\^2 \$\$
+
+$$\frac{1.5}{2.3}$$
+
+# Citations
+
+go to visual -> insert -> doi
+Can go to docs -> references.bib -> can manually enter citation if needed 
+
+[@krauss2023]
+
+
